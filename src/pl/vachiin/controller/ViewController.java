@@ -13,6 +13,7 @@ import pl.vachiin.app.Player;
 import pl.vachiin.bean.AppDataModel;
 import pl.vachiin.bean.TableService;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +30,14 @@ public class ViewController {
     }
 
     @RequestMapping(value = "/pilkarzyki", method = RequestMethod.GET)
-    public ModelAndView read() {
-
+    public ModelAndView read(HttpSession aSession) {
+        model.setSessionId(aSession.getId());
         return new ModelAndView("pilkarzyki", "model", model);
     }
 
     @RequestMapping(value = "/pilkarzyki", method = RequestMethod.POST)
-    public ModelAndView refresh(@RequestParam String action, @ModelAttribute("model") AppDataModel appModel, BindingResult result, Model model1) {
+    public ModelAndView refresh(@RequestParam String action, @ModelAttribute("model") AppDataModel appModel,
+                                BindingResult result, Model model1, HttpSession aSession) {
 
         if ("Losuj".equals(action)) {
             List<Player> listaZKolorem = new ArrayList<>();
@@ -47,7 +49,7 @@ public class ViewController {
                 }
             }
 
-            tableService.arrangePlayers(listaZKolorem);
+            tableService.arrangePlayers(listaZKolorem, aSession.getId());
         }
 
         return new ModelAndView("pilkarzyki", "model", model);

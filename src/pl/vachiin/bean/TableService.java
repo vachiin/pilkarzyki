@@ -20,7 +20,7 @@ public class TableService {
         model = aModel;
     }
 
-    public void arrangePlayers(List<Player> aCheckedPlayers) {
+    public void arrangePlayers(List<Player> aCheckedPlayers, String aSessionId) {
         List<Player> pGracze = new ArrayList<>(aCheckedPlayers);
         model.setCheckedPlayers(pGracze);
         Collections.shuffle(pGracze, new SecureRandom());
@@ -31,7 +31,7 @@ public class TableService {
         model.getTable().setWhiteDefense(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
 
         genSave();
-        saveLottry();
+        saveLottry(aSessionId);
     }
 
     private void genSave() {
@@ -39,8 +39,8 @@ public class TableService {
         model.getStatistics().setGenDate(new Date());
     }
 
-    private void saveLottry() {
-        Lottery pLottery = new Lottery(model.getTable(), model.getStatistics());
+    private void saveLottry(String aSessionId) {
+        Lottery pLottery = new Lottery(model.getTable(), model.getStatistics(), aSessionId);
         model.getLotteryList().addFirst(pLottery);
     }
 }

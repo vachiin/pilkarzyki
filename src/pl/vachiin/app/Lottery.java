@@ -3,10 +3,12 @@ package pl.vachiin.app;
 public class Lottery {
     private Table table;
     private Statistics statistics;
+    private String sessionId;
 
-    public Lottery(Table aTable, Statistics aStatistics) {
+    public Lottery(Table aTable, Statistics aStatistics, String aSessionId) {
         table = new Table(aTable);
         statistics = new Statistics(aStatistics);
+        sessionId = aSessionId;
     }
 
     public Table getTable() {
@@ -23,5 +25,9 @@ public class Lottery {
 
     public void setStatistics(Statistics aStatistics) {
         statistics = aStatistics;
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 }

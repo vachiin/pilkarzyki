@@ -45,6 +45,7 @@
     <div>
         <c:if test="${not empty model.lotteryList}">
             Dane ostatnich losowań:<br/>
+            <div>Twój session ID:&nbsp;${model.sessionId}</div>
             <table border="3">
                 <thead>
                 <tr>
@@ -54,6 +55,7 @@
                     <th>Biały atak</th>
                     <th>Niebieska obrona</th>
                     <th>Niebieski atak</th>
+                    <th>session ID</th>
                 </tr>
                 </thead>
                 <c:forEach items="${model.lotteryList}" var="lottery" end="9">
@@ -64,6 +66,7 @@
                         <td style="background-color: ${lottery.table.whiteAttack.color}">${lottery.table.whiteAttack}</td>
                         <td style="background-color: ${lottery.table.blueDefense.color}">${lottery.table.blueDefense}</td>
                         <td style="background-color: ${lottery.table.blueAttack.color}">${lottery.table.blueAttack}</td>
+                        <td>${lottery.sessionId}</td>
                     </tr>
                 </c:forEach>
             </table>

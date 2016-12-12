@@ -20,6 +20,7 @@ public class AppDataModel {
     private Table table = new Table();
     private Statistics statistics = new Statistics();
     private LinkedList<Lottery> lotteryList = new LinkedList<>();
+    private String sessionId;
 
     public List<Player> getAllPlayers() {
         return allPlayers;
@@ -59,5 +60,13 @@ public class AppDataModel {
 
     public void setLotteryList(LinkedList<Lottery> aLotteryList) {
         lotteryList = aLotteryList;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String aSessionId) {
+        sessionId = aSessionId;
     }
 }
