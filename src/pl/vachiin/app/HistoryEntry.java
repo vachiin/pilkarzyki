@@ -1,11 +1,11 @@
 package pl.vachiin.app;
 
-public class Lottery {
+public class HistoryEntry {
     private Table table;
     private Statistics statistics;
     private String sessionId;
 
-    public Lottery(Table aTable, Statistics aStatistics, String aSessionId) {
+    public HistoryEntry(Table aTable, Statistics aStatistics, String aSessionId) {
         table = new Table(aTable);
         statistics = new Statistics(aStatistics);
         sessionId = aSessionId;

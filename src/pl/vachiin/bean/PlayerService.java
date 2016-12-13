@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 @Scope("singleton")
 public class PlayerService {
 
-    public static final Player nikt = new Player("", "gray");
+    static final Player nikt = new Player("", "gray");
     private final AppDataModel model;
 
     @Autowired

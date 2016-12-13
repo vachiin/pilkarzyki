@@ -3,7 +3,7 @@ package pl.vachiin.bean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pl.vachiin.app.Lottery;
+import pl.vachiin.app.HistoryEntry;
 import pl.vachiin.app.Player;
 
 import java.security.SecureRandom;
@@ -21,6 +21,12 @@ public class TableService {
     }
 
     public void arrangePlayers(List<Player> aCheckedPlayers, String aSessionId) {
+        shufflePlayers(aCheckedPlayers);
+        genStats();
+        saveHistory(aSessionId);
+    }
+
+    private void shufflePlayers(List<Player> aCheckedPlayers) {
         List<Player> pGracze = new ArrayList<>(aCheckedPlayers);
         model.setCheckedPlayers(pGracze);
         Collections.shuffle(pGracze, new SecureRandom());
@@ -29,18 +35,15 @@ public class TableService {
         model.getTable().setBlueAttack(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
         model.getTable().setBlueDefense(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
         model.getTable().setWhiteDefense(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
-
-        genSave();
-        saveLottry(aSessionId);
     }
 
-    private void genSave() {
+    private void genStats() {
         model.getStatistics().incGenNumber();
         model.getStatistics().setGenDate(new Date());
     }
 
-    private void saveLottry(String aSessionId) {
-        Lottery pLottery = new Lottery(model.getTable(), model.getStatistics(), aSessionId);
-        model.getLotteryList().addFirst(pLottery);
+    private void saveHistory(String aSessionId) {
+        HistoryEntry pLottery = new HistoryEntry(model.getTable(), model.getStatistics(), aSessionId);
+        model.getHistoryEntries().addFirst(pLottery);
     }
 }

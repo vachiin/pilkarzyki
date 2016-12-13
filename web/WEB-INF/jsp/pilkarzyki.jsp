@@ -43,7 +43,7 @@
         <input type="submit" value="Odśwież" name="action"/>
     </div>
     <div>
-        <c:if test="${not empty model.lotteryList}">
+        <c:if test="${not empty model.historyEntries}">
             Dane ostatnich losowań:<br/>
             <div>Twój session ID:&nbsp;${model.sessionId}</div>
             <table border="3">
@@ -58,15 +58,15 @@
                     <th>session ID</th>
                 </tr>
                 </thead>
-                <c:forEach items="${model.lotteryList}" var="lottery" end="9">
+                <c:forEach items="${model.historyEntries}" var="historyEntry" end="9">
                     <tr>
-                        <td>${lottery.statistics.genInt}</td>
-                        <td>${lottery.statistics.genDateString}</td>
-                        <td style="background-color: ${lottery.table.whiteDefense.color}">${lottery.table.whiteDefense}</td>
-                        <td style="background-color: ${lottery.table.whiteAttack.color}">${lottery.table.whiteAttack}</td>
-                        <td style="background-color: ${lottery.table.blueDefense.color}">${lottery.table.blueDefense}</td>
-                        <td style="background-color: ${lottery.table.blueAttack.color}">${lottery.table.blueAttack}</td>
-                        <td>${lottery.sessionId}</td>
+                        <td>${historyEntry.statistics.genInt}</td>
+                        <td>${historyEntry.statistics.genDateString}</td>
+                        <td style="background-color: ${historyEntry.table.whiteDefense.color}">${historyEntry.table.whiteDefense}</td>
+                        <td style="background-color: ${historyEntry.table.whiteAttack.color}">${historyEntry.table.whiteAttack}</td>
+                        <td style="background-color: ${historyEntry.table.blueDefense.color}">${historyEntry.table.blueDefense}</td>
+                        <td style="background-color: ${historyEntry.table.blueAttack.color}">${historyEntry.table.blueAttack}</td>
+                        <td>${historyEntry.sessionId}</td>
                     </tr>
                 </c:forEach>
             </table>

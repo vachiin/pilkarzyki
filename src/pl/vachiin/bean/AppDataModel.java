@@ -2,7 +2,7 @@ package pl.vachiin.bean;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pl.vachiin.app.Lottery;
+import pl.vachiin.app.HistoryEntry;
 import pl.vachiin.app.Player;
 import pl.vachiin.app.Statistics;
 import pl.vachiin.app.Table;
@@ -19,7 +19,7 @@ public class AppDataModel {
     private List<Player> checkedPlayers = new ArrayList<>();
     private Table table = new Table();
     private Statistics statistics = new Statistics();
-    private LinkedList<Lottery> lotteryList = new LinkedList<>();
+    private LinkedList<HistoryEntry> historyEntries = new LinkedList<>();
     private String sessionId;
 
     public List<Player> getAllPlayers() {
@@ -54,12 +54,12 @@ public class AppDataModel {
         statistics = aStatistics;
     }
 
-    public LinkedList<Lottery> getLotteryList() {
-        return lotteryList;
+    public LinkedList<HistoryEntry> getHistoryEntries() {
+        return historyEntries;
     }
 
-    public void setLotteryList(LinkedList<Lottery> aLotteryList) {
-        lotteryList = aLotteryList;
+    public void setHistoryEntries(LinkedList<HistoryEntry> aHistoryEntries) {
+        historyEntries = aHistoryEntries;
     }
 
     public String getSessionId() {
