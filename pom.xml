@@ -20,10 +20,10 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>web/WEB-INF/classes</directory>
+                            <directory>src/main/webapp/WEB-INF/classes</directory>
                         </fileset>
                         <fileset>
-                            <directory>web/WEB-INF/lib</directory>
+                            <directory>src/main/webapp/WEB-INF/lib</directory>
                         </fileset>
                     </filesets>
                 </configuration>
@@ -44,7 +44,7 @@
                 <version>2.6</version>
                 <configuration>
                     <webappDirectory>web</webappDirectory>
-                    <webXml>web\WEB-INF\web.xml</webXml>
+                    <webXml>src\main\webapp\WEB-INF\web.xml</webXml>
                 </configuration>
             </plugin>
 
