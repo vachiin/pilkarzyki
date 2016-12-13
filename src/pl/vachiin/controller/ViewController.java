@@ -52,6 +52,7 @@ public class ViewController {
             tableService.arrangePlayers(listaZKolorem, aSession.getId());
         }
 
+        model.setSessionId(aSession.getId());
         return new ModelAndView("pilkarzyki", "model", model);
     }
 }
