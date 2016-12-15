@@ -2,12 +2,12 @@ package pl.vachiin.app;
 
 public class HistoryEntry {
     private Table table;
-    private Statistics statistics;
+    private Generation generation;
     private String sessionId;
 
-    public HistoryEntry(Table aTable, Statistics aStatistics, String aSessionId) {
+    public HistoryEntry(Table aTable, Generation aGeneration, String aSessionId) {
         table = new Table(aTable);
-        statistics = new Statistics(aStatistics);
+        generation = new Generation(aGeneration);
         sessionId = aSessionId;
     }
 
@@ -19,12 +19,12 @@ public class HistoryEntry {
         table = aTable;
     }
 
-    public Statistics getStatistics() {
-        return statistics;
+    public Generation getGeneration() {
+        return generation;
     }
 
-    public void setStatistics(Statistics aStatistics) {
-        statistics = aStatistics;
+    public void setGeneration(Generation aGeneration) {
+        generation = aGeneration;
     }
 
     public String getSessionId() {

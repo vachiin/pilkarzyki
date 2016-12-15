@@ -60,13 +60,37 @@
                 </thead>
                 <c:forEach items="${model.historyEntries}" var="historyEntry" end="9">
                     <tr>
-                        <td>${historyEntry.statistics.genInt}</td>
-                        <td>${historyEntry.statistics.genDateString}</td>
+                        <td>${historyEntry.generation.genInt}</td>
+                        <td>${historyEntry.generation.genDateString}</td>
                         <td style="background-color: ${historyEntry.table.whiteDefense.color}">${historyEntry.table.whiteDefense}</td>
                         <td style="background-color: ${historyEntry.table.whiteAttack.color}">${historyEntry.table.whiteAttack}</td>
                         <td style="background-color: ${historyEntry.table.blueDefense.color}">${historyEntry.table.blueDefense}</td>
                         <td style="background-color: ${historyEntry.table.blueAttack.color}">${historyEntry.table.blueAttack}</td>
                         <td>${historyEntry.sessionId}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+    </div>
+    <div>
+        <c:if test="${not empty model.statistics.allPlayers}">
+            <table border="3">
+                <thead>
+                <tr>
+                    <th>Gracz</th>
+                    <th>Biały obrona</th>
+                    <th>Biały atak</th>
+                    <th>Niebieski obrona</th>
+                    <th>Niebieski atak</th>
+                </tr>
+                </thead>
+                <c:forEach items="${model.statistics.allPlayers}" var="plyr">
+                    <tr>
+                        <td>${plyr}</td>
+                        <td>${model.statistics.getPercentWhiteDefense(plyr)}%</td>
+                        <td>${model.statistics.getPercentWhiteAttack(plyr)}%</td>
+                        <td>${model.statistics.getPercentBlueDefense(plyr)}%</td>
+                        <td>${model.statistics.getPercentBlueAttack(plyr)}%</td>
                     </tr>
                 </c:forEach>
             </table>

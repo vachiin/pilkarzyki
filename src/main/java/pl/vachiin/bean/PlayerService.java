@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 @Scope("singleton")
 public class PlayerService {
 
-    static final Player nikt = new Player("", "gray");
+    static final Player NIKT = new Player("", "gray");
     private final AppDataModel model;
 
     @Autowired
@@ -28,10 +28,10 @@ public class PlayerService {
 
         model.getCheckedPlayers().addAll(model.getAllPlayers());
 
-        model.getTable().setWhiteAttack(nikt);
-        model.getTable().setWhiteDefense(nikt);
-        model.getTable().setBlueAttack(nikt);
-        model.getTable().setBlueDefense(nikt);
+        model.getTable().setWhiteAttack(NIKT);
+        model.getTable().setWhiteDefense(NIKT);
+        model.getTable().setBlueAttack(NIKT);
+        model.getTable().setBlueDefense(NIKT);
     }
 
 }

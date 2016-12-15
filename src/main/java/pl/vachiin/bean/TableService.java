@@ -9,6 +9,8 @@ import pl.vachiin.app.Player;
 import java.security.SecureRandom;
 import java.util.*;
 
+import static pl.vachiin.bean.PlayerService.NIKT;
+
 @Component
 @Scope("singleton")
 public class TableService {
@@ -31,19 +33,33 @@ public class TableService {
         model.setCheckedPlayers(pGracze);
         Collections.shuffle(pGracze, new SecureRandom());
         Iterator<Player> pIterator = pGracze.iterator();
-        model.getTable().setWhiteAttack(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
-        model.getTable().setBlueAttack(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
-        model.getTable().setBlueDefense(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
-        model.getTable().setWhiteDefense(pIterator.hasNext() ? pIterator.next() : PlayerService.nikt);
+        model.getTable().setWhiteAttack(pIterator.hasNext() ? pIterator.next() : NIKT);
+        model.getTable().setBlueAttack(pIterator.hasNext() ? pIterator.next() : NIKT);
+        model.getTable().setBlueDefense(pIterator.hasNext() ? pIterator.next() : NIKT);
+        model.getTable().setWhiteDefense(pIterator.hasNext() ? pIterator.next() : NIKT);
     }
 
     private void genStats() {
-        model.getStatistics().incGenNumber();
-        model.getStatistics().setGenDate(new Date());
+        model.getGeneration().incGenNumber();
+        model.getGeneration().setGenDate(new Date());
     }
 
     private void saveHistory(String aSessionId) {
-        HistoryEntry pLottery = new HistoryEntry(model.getTable(), model.getStatistics(), aSessionId);
+        HistoryEntry pLottery = new HistoryEntry(model.getTable(), model.getGeneration(), aSessionId);
         model.getHistoryEntries().addFirst(pLottery);
+
+        model.getStatistics().increment();
+        if (!NIKT.equals(model.getTable().getWhiteDefense())) {
+            model.getStatistics().addPercentWhiteDefense(model.getTable().getWhiteDefense().getNick());
+        }
+        if (!NIKT.equals(model.getTable().getWhiteAttack())) {
+            model.getStatistics().addPercentWhiteAttack(model.getTable().getWhiteAttack().getNick());
+        }
+        if (!NIKT.equals(model.getTable().getBlueDefense())) {
+            model.getStatistics().addPercentBlueDefense(model.getTable().getBlueDefense().getNick());
+        }
+        if (!NIKT.equals(model.getTable().getBlueAttack())) {
+            model.getStatistics().addPercentBlueAttack(model.getTable().getBlueAttack().getNick());
+        }
     }
 }

@@ -2,10 +2,7 @@ package pl.vachiin.bean;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pl.vachiin.app.HistoryEntry;
-import pl.vachiin.app.Player;
-import pl.vachiin.app.Statistics;
-import pl.vachiin.app.Table;
+import pl.vachiin.app.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,9 +15,10 @@ public class AppDataModel {
     private List<Player> allPlayers = new ArrayList<>();
     private List<Player> checkedPlayers = new ArrayList<>();
     private Table table = new Table();
-    private Statistics statistics = new Statistics();
+    private Generation generation = new Generation();
     private LinkedList<HistoryEntry> historyEntries = new LinkedList<>();
     private String sessionId;
+    private Statistics statistics = new Statistics();
 
     public List<Player> getAllPlayers() {
         return allPlayers;
@@ -46,12 +44,12 @@ public class AppDataModel {
         table = aTable;
     }
 
-    public Statistics getStatistics() {
-        return statistics;
+    public Generation getGeneration() {
+        return generation;
     }
 
-    public void setStatistics(Statistics aStatistics) {
-        statistics = aStatistics;
+    public void setGeneration(Generation aGeneration) {
+        generation = aGeneration;
     }
 
     public LinkedList<HistoryEntry> getHistoryEntries() {
@@ -68,5 +66,13 @@ public class AppDataModel {
 
     public void setSessionId(String aSessionId) {
         sessionId = aSessionId;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics aStatistics) {
+        statistics = aStatistics;
     }
 }
