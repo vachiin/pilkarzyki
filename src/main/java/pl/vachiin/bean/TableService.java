@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.vachiin.app.HistoryEntry;
 import pl.vachiin.app.Player;
+import pl.vachiin.app.Table;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -31,12 +32,29 @@ public class TableService {
     private void shufflePlayers(List<Player> aCheckedPlayers) {
         List<Player> pGracze = new ArrayList<>(aCheckedPlayers);
         model.setCheckedPlayers(pGracze);
-        Collections.shuffle(pGracze, new SecureRandom());
-        Iterator<Player> pIterator = pGracze.iterator();
-        model.getTable().setWhiteAttack(pIterator.hasNext() ? pIterator.next() : NIKT);
-        model.getTable().setBlueAttack(pIterator.hasNext() ? pIterator.next() : NIKT);
-        model.getTable().setBlueDefense(pIterator.hasNext() ? pIterator.next() : NIKT);
-        model.getTable().setWhiteDefense(pIterator.hasNext() ? pIterator.next() : NIKT);
+        boolean goodMixed = false;
+
+        while (!goodMixed) {
+            Collections.shuffle(pGracze, new SecureRandom());
+            Iterator<Player> pIterator = pGracze.iterator();
+            model.getTable().setWhiteAttack(pIterator.hasNext() ? pIterator.next() : NIKT);
+            model.getTable().setBlueAttack(pIterator.hasNext() ? pIterator.next() : NIKT);
+            model.getTable().setBlueDefense(pIterator.hasNext() ? pIterator.next() : NIKT);
+            model.getTable().setWhiteDefense(pIterator.hasNext() ? pIterator.next() : NIKT);
+
+            if (model.getHistoryEntries().isEmpty()) {
+                goodMixed = true;
+            } else {
+                Table pLast = model.getHistoryEntries().getFirst().getTable();
+                int howManyTheSame = 0;
+                howManyTheSame += pLast.getWhiteDefense().getNick().equals(model.getTable().getWhiteDefense().getNick()) ? 1 : 0;
+                howManyTheSame += pLast.getWhiteAttack().getNick().equals(model.getTable().getWhiteAttack().getNick()) ? 1 : 0;
+                howManyTheSame += pLast.getBlueDefense().getNick().equals(model.getTable().getBlueDefense().getNick()) ? 1 : 0;
+                howManyTheSame += pLast.getBlueAttack().getNick().equals(model.getTable().getBlueAttack().getNick()) ? 1 : 0;
+
+                goodMixed = (howManyTheSame <= 0);
+            }
+        }
     }
 
     private void genStats() {

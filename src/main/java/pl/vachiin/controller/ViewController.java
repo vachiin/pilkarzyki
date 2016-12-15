@@ -49,7 +49,9 @@ public class ViewController {
                 }
             }
 
-            tableService.arrangePlayers(listaZKolorem, aSession.getId());
+            if (listaZKolorem.size() >= 4) {
+                tableService.arrangePlayers(listaZKolorem, aSession.getId());
+            }
         }
 
         model.setSessionId(aSession.getId());
