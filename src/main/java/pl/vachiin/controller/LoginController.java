@@ -34,15 +34,12 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView readLogin(HttpSession aSession, @ModelAttribute("model") AppDataModel appModel) {
-        model.setSessionId(aSession.getId());
-
         return new ModelAndView("login", "model", model);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView writeLogin(HttpSession aSession, @ModelAttribute("model") AppDataModel appModel,
                                    @RequestParam String cookie, HttpServletResponse response) {
-        model.setSessionId(aSession.getId());
         if (cookie == null || cookie.trim().length() == 0) {
             return new ModelAndView("login", "model", model);
         }
@@ -54,6 +51,7 @@ public class LoginController {
         }
         c.setMaxAge(3600 * 24 * 7);
         response.addCookie(c);
-        return new ModelAndView("pilkarzyki", "model", model);
+        model.setSessionId(cookie);
+        return new ModelAndView("redirect:pilkarzyki.jsp", "model", model);
     }
 }
