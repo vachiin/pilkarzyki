@@ -4,20 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.vachiin.app.Player;
 import pl.vachiin.bean.AppDataModel;
 import pl.vachiin.bean.TableService;
 
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.vachiin.controller.LoginController.NO_NICK;
+
 @Controller
+@RequestMapping(value = "/pilkarzyki")
 public class ViewController {
 
     private final AppDataModel model;
@@ -29,15 +31,33 @@ public class ViewController {
         tableService = aTableService;
     }
 
-    @RequestMapping(value = "/pilkarzyki", method = RequestMethod.GET)
-    public ModelAndView read(HttpSession aSession) {
-        model.setSessionId(aSession.getId());
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView read(HttpSession aSession, @CookieValue(value = "nick", defaultValue = NO_NICK) String loginCookie) {
+        if (loginCookie.equals(NO_NICK)) {
+            return new ModelAndView("login", "model", model);
+        }
+        try {
+            model.setSessionId(URLDecoder.decode(loginCookie, "UTF-8"));
+        } catch (UnsupportedEncodingException aE) {
+            throw new RuntimeException(aE);
+        }
         return new ModelAndView("pilkarzyki", "model", model);
     }
 
-    @RequestMapping(value = "/pilkarzyki", method = RequestMethod.POST)
+
+    @RequestMapping(method = RequestMethod.POST)
     public ModelAndView refresh(@RequestParam String action, @ModelAttribute("model") AppDataModel appModel,
-                                BindingResult result, Model model1, HttpSession aSession) {
+                                BindingResult result, Model model1, HttpSession aSession,
+                                @CookieValue(value = "nick", defaultValue = NO_NICK) String loginCookie) {
+        if (loginCookie.equals(NO_NICK)) {
+            return new ModelAndView("login", "model", model);
+        }
+        String pDecodedLogin = null;
+        try {
+            pDecodedLogin = URLDecoder.decode(loginCookie, "UTF-8");
+        } catch (UnsupportedEncodingException aE) {
+            throw new RuntimeException(aE);
+        }
 
         if ("Losuj".equals(action)) {
             List<Player> listaZKolorem = new ArrayList<>();
@@ -50,11 +70,11 @@ public class ViewController {
             }
 
             if (listaZKolorem.size() >= 4) {
-                tableService.arrangePlayers(listaZKolorem, aSession.getId());
+                tableService.arrangePlayers(listaZKolorem, pDecodedLogin);
             }
         }
 
-        model.setSessionId(aSession.getId());
+        model.setSessionId(pDecodedLogin);
         return new ModelAndView("pilkarzyki", "model", model);
     }
 }

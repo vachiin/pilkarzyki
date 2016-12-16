@@ -41,6 +41,6 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/pilkarzyki.jsp</url-pattern>
-        <url-pattern>/pilkarzyki.html</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
     </servlet-mapping>
 </web-app>

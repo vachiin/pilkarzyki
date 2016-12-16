@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<form:form id="form_id" action="#" method="post" modelAttribute="model">
+<form:form id="form_id" action="pilkarzyki.jsp" method="post" modelAttribute="model">
     <div style="width: 100%; overflow: hidden;">
         <div style="border: 2px aqua; width: 200px; float: left;">
             Kto gra: <br/>
